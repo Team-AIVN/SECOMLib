@@ -20,13 +20,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Pattern;
 import org.grad.secomv2.core.base.CsvStringGenerator;
 
 import jakarta.validation.constraints.NotNull;
 import org.grad.secomv2.core.base.SecomInstantDeserializer;
 import org.grad.secomv2.core.base.SecomInstantSerializer;
 
+import javax.validation.constraints.Pattern;
 import java.time.Instant;
 
 public abstract class AbstractEnvelope implements CsvStringGenerator {
@@ -36,8 +36,8 @@ public abstract class AbstractEnvelope implements CsvStringGenerator {
     @Schema(description = "The public certificate (chain) of the sender, used to verify the EnvelopeKeyObject signature")
     protected String[] envelopeSignatureCertificate;
     @NotNull
-    @Schema(description = "Claimed Thumbprint for Signed Root Key (X.509 Certificate) Format: SHA-1 or SHA-256 thumbprint.", example = "AB12CD34EF56AB78CD90EF12AB34CD56EF78AB90")
-    @Pattern(regexp = "^[A-Fa-f0-9]{40,64}$")
+    @Schema(description = "Claimed SHA-384 Thumbprint for Signed Root Key (X.509 Certificate) in HEX format.", example = "AB12CD34EF56AB78CD90EF12AB34CD56EF78AB90AB12CD34EF56AB78CD90EF12AB34CD56EF78AB90AB12CD34EF56AB78")
+    @Pattern(regexp = "^(0x)?[A-Fa-f0-9]{96}$")
     protected String envelopeRootCertificateThumbprint;
     @NotNull
     @Schema(description = "Time when encryptionKey envelope is signed Must be in UTC format: yyyy-MM-ddTHH:mm:ssZ.", type = "string",example = "1985-04-12T10:15:30Z", pattern =  "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(Z|\\+\\d{4})?")
