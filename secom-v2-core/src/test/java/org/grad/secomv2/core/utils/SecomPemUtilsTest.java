@@ -210,7 +210,7 @@ class SecomPemUtilsTest {
 
         // Assert it's correct
         assertNotNull(thumbprint);
-        assertEquals("7f0d6f9f66c0cde0963f4996992b74a45f1dd605ab20998d14f9154a51d90eb0", thumbprint);
+        assertEquals("c4b6f3ced97fd73d094e708e26cca6401f98f1272f72253f9e9bde2316758e4bcb976463011b035c6d37e563e52ad926", thumbprint);
     }
 
 }

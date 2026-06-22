@@ -16,6 +16,7 @@
 
 package org.grad.secomv2.core.utils;
 
+import org.grad.secomv2.core.base.SecomConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -205,11 +206,12 @@ class SecomPemUtilsTest {
     @Test
     void testGetCertThumbprint() throws CertificateEncodingException, NoSuchAlgorithmException {
         // Get the thumbprint
-        final String thumbprint = SecomPemUtils.getCertThumbprint(this.resourceCert, "SHA-1");
+        final String thumbprint = SecomPemUtils.getCertThumbprint(this.resourceCert,
+                SecomConstants.CERTIFICATE_THUMBPRINT_HASH);
 
         // Assert it's correct
         assertNotNull(thumbprint);
-        assertEquals("4328a4dc335c1ce73d8d8cdce4ed5afa8c1caa53", thumbprint);
+        assertEquals("c4b6f3ced97fd73d094e708e26cca6401f98f1272f72253f9e9bde2316758e4bcb976463011b035c6d37e563e52ad926", thumbprint);
     }
 
 }

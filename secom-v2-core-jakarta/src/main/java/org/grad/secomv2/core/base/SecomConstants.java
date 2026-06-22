@@ -29,7 +29,7 @@ import java.time.format.DateTimeFormatterBuilder;
  */
 public class SecomConstants {
 
-    /**
+    /**s
      * The SECOM Data Protection Scheme.
      */
     public static final String SECOM_PROTECTION_SCHEME = "SECOM";
@@ -42,7 +42,7 @@ public class SecomConstants {
     /**
      * The Algorithm to be used for generating signatures.
      */
-    public static final String CERTIFICATE_THUMBPRINT_HASH = "SHA-256";
+    public static final String CERTIFICATE_THUMBPRINT_HASH = "SHA-384";
 
     /**
      * The SECOM Maximum Payload Size in KiloBytes.
