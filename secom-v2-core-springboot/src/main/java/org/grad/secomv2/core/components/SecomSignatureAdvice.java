@@ -303,7 +303,8 @@ public class SecomSignatureAdvice implements RequestBodyAdvice {
             try {
                 rootX509CertificateThumbprint = SecomPemUtils.getCertThumbprint(rootX509Certificate, SecomConstants.CERTIFICATE_THUMBPRINT_HASH);
                 if(rootCertificateThumbprint.compareTo(rootX509CertificateThumbprint) != 0) {
-                    throw new SecomInvalidCertificateException("The provided SECOM CA root certificate is not recognised");
+                    throw new SecomInvalidCertificateException("The provided SECOM CA root " +
+                            "certificate is not recognised, expected " + rootX509CertificateThumbprint + " but got " + rootCertificateThumbprint  + " instead.");
                 }
             } catch (GeneralSecurityException ex) {
                 throw new SecomInvalidCertificateException("Failed to generate the SECOM CA root certificate thumbprint");
