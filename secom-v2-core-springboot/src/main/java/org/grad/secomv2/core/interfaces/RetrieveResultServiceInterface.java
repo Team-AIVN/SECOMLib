@@ -16,6 +16,7 @@
 
 package org.grad.secomv2.core.interfaces;
 
+import org.grad.secomv2.core.exceptions.SecomNotAuthorisedException;
 import org.springframework.boot.json.JsonParseException;
 import tools.jackson.core.JacksonException;
 import org.grad.secomv2.core.base.SecomConstants;
@@ -77,7 +78,10 @@ public interface RetrieveResultServiceInterface extends GenericSecomInterface {
         ResponseObject responseObject = new ResponseObject();
 
         // Handle according to the exception type
-        if(ex instanceof SecomValidationException
+        if(ex instanceof SecomNotAuthorisedException) {
+            responseStatus = HttpStatus.UNAUTHORIZED;
+            responseObject.setMessage("Not authorized to requested information");
+        } else if(ex instanceof SecomValidationException
                 || ex.getCause() instanceof SecomValidationException
                 || ex instanceof ValidationException
                 || ex instanceof JacksonException

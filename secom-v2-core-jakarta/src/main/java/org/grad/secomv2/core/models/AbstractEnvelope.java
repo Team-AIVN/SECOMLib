@@ -16,7 +16,6 @@
 
 package org.grad.secomv2.core.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -44,10 +43,6 @@ public abstract class AbstractEnvelope implements CsvStringGenerator {
     @JsonSerialize(using = SecomInstantSerializer.class)
     @JsonDeserialize(using = SecomInstantDeserializer.class)
     protected Instant envelopeSignatureTime;
-    @JsonIgnore
-    @Deprecated(since = "SECOM v2 CD3", forRemoval = true)
-    @Schema(type = "string", description = "(S-100) Specifies the algorithm used to compute envelopeSignature\\r\\nFor example \\\"ECDSA-384-SHA2\\\"")
-    protected String envelopeSignatureReference;
 
     /**
      * Gets envelope signature certificate.
@@ -103,21 +98,4 @@ public abstract class AbstractEnvelope implements CsvStringGenerator {
         this.envelopeSignatureTime = envelopeSignatureTime;
     }
 
-    /**
-     * Gets digital signature reference.
-     *
-     * @return the digital signature reference
-     */
-    public String getEnvelopeSignatureReference() {
-        return envelopeSignatureReference;
-    }
-
-    /**
-     * Sets digital signature reference.
-     *
-     * @param envelopeSignatureReference the digital signature reference
-     */
-    public void setEnvelopeSignatureReference(String envelopeSignatureReference) {
-        this.envelopeSignatureReference = envelopeSignatureReference;
-    }
 }
