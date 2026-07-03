@@ -306,6 +306,34 @@ public class SearchParameters implements CsvStringGenerator {
         this.endpointUri = endpointUri;
     }
 
+    /**
+     * Checks if the search parameters are empty
+     * @return boolean indicating if the search parameters are empty
+     */
+    @JsonIgnore
+    public boolean isEmpty() {
+        return (name == null || name.isBlank()) &&
+                (status == null &&
+                (version == null || version.isBlank()) &&
+                (keywords == null || keywords.length == 0) &&
+                (description == null || description.isBlank()) &&
+                dataProductType == null &&
+                (specificationId == null || specificationId.isBlank()) &&
+                (designId == null || designId.isBlank()) &&
+                (instanceId == null || instanceId.isBlank()) &&
+                (mmsi == null || mmsi.isBlank()) &&
+                (imo == null || imo.isBlank()) &&
+                (serviceType == null || serviceType.isBlank()) &&
+                (unlocode == null || unlocode.isBlank()) &&
+                endpointUri == null);
+    }
+
+    /**
+     * This method should be implemented by all envelop objects to allow the
+     * generation of the signature CSV attribute array
+     *
+     * @return the generated signature CSV attribute array
+     */
     @Override
     public Object[] getAttributeArray() {
         return new Object[] {
@@ -325,27 +353,4 @@ public class SearchParameters implements CsvStringGenerator {
                 endpointUri
         };
     }
-
-    /**
-     * Checks if the search parameters are empty
-     * @return boolean indicating if the search parameters are empty
-     */
-    @JsonIgnore
-    public boolean isEmpty() {
-        return (name == null || name.isBlank()) &&
-                (status == null  &&
-                (version == null || version.isBlank()) &&
-                (keywords == null || keywords.length == 0) &&
-                (description == null || description.isBlank()) &&
-                dataProductType == null &&
-                (specificationId == null || specificationId.isBlank()) &&
-                (designId == null || designId.isBlank()) &&
-                (instanceId == null || instanceId.isBlank()) &&
-                (mmsi == null || mmsi.isBlank()) &&
-                (imo == null || imo.isBlank()) &&
-                (serviceType == null || serviceType.isBlank()) &&
-                (unlocode == null || unlocode.isBlank()) &&
-                endpointUri == null);
-    }
-
 }
