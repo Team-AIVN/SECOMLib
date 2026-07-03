@@ -110,7 +110,7 @@ public class EnvelopeKeyRequestObject extends AbstractEnvelope {
                 envelopeSignatureCertificate,
                 envelopeSignatureTime,
                 envelopeRootCertificateThumbprint,
-                callbackEndpoint,
+                callbackEndpoint
         };
     }
 }

@@ -127,20 +127,8 @@ public class SecomV2ExceptionMapper implements ExceptionMapper<Exception>, Conte
         secomLogger.warning("Exception was: " + ex.getClass().getSimpleName());
 
         // Then handle
-
-
-
-
-        String pathInfo = this.request.getPathInfo();
-
-        if (pathInfo != null) {
-            // Route retrieveResult requests (with or without transactionId) to the handler
-            if (pathInfo.equals(RETRIEVE_RESULT_INTERFACE_PATH)
-                    || pathInfo.startsWith(RETRIEVE_RESULT_INTERFACE_PATH + "/")) {
-                return RetrieveResultServiceInterface
-                        .handleRetrieveResultInterfaceExceptions(ex, this.request, null);
-            }
-            switch(pathInfo) {
+        if(Optional.ofNullable(this.request).map(HttpServletRequest::getPathInfo).isPresent()) {
+            switch(this.request.getPathInfo()) {
                 case ACCESS_INTERFACE_PATH:
                     return AccessServiceInterface.handleAccessInterfaceExceptions(ex, this.request, null);
                 case ACCESS_NOTIFICATION_INTERFACE_PATH:

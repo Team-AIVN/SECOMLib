@@ -19,6 +19,7 @@ package org.grad.secomv2.core.models;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
 import org.grad.secomv2.core.models.enums.SECOM_DataProductType;
+import org.grad.secomv2.core.models.enums.ServiceInstanceStatusEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -45,7 +46,7 @@ class SearchParametersTest {
         // Generate a new object
         this.obj = new SearchParameters();
         this.obj.setName("name");
-        this.obj.setStatus("status");
+        this.obj.setStatus(ServiceInstanceStatusEnum.PROVISIONAL);
         this.obj.setVersion("version");
         this.obj.setKeywords(new String[]{"keywords"});
         this.obj.setDescription("description");

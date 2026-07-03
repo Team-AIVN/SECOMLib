@@ -54,7 +54,6 @@ class EncryptionKeyRequestObjectTest {
         // Create a new envelope upload object
         this.envelopeKeyRequestObject = new EnvelopeKeyRequestObject();
         this.envelopeKeyRequestObject.setDataReference(UUID.randomUUID());
-        this.envelopeKeyRequestObject.setEnvelopeSignatureReference("envelopeSignatureReference");
         this.envelopeKeyRequestObject.setPublicCertificate("publicCertificate");
         this.envelopeKeyRequestObject.setEnvelopeSignatureCertificate(new String[]{"envelopeCertificate"});
         this.envelopeKeyRequestObject.setEnvelopeRootCertificateThumbprint("envelopeThumbprint");

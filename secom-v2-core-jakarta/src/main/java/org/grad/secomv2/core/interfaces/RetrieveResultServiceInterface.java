@@ -31,7 +31,6 @@ import jakarta.validation.ValidationException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.grad.secomv2.core.models.SearchResult;
 
 /**
  The SECOM Retrieve Result Interface Definition.
@@ -69,42 +68,36 @@ public interface RetrieveResultServiceInterface extends GenericSecomInterface {
      * @return the handler response according to the SECOM standard
      */
     static Response handleRetrieveResultInterfaceExceptions(Exception ex,
-                                                            HttpServletRequest request,
-                                                            HttpServletResponse response) {
+                                                           HttpServletRequest request,
+                                                           HttpServletResponse response) {
 
         // Create the encryption key response
-        jakarta.ws.rs.core.Response.Status responseStatus;
-        EncryptionKeyResponseObject encryptionKeyResponseObject = new EncryptionKeyResponseObject();
-
-        if (ex instanceof SecomNotAuthorisedException) {
-            responseStatus = Response.Status.UNAUTHORIZED;
-            encryptionKeyResponseObject.setMessage("Not authorized to requested information");
-            return Response.status(responseStatus)
-                    .entity(encryptionKeyResponseObject)
-                    .build();
-        }
-        else if(ex instanceof SecomNotFoundException || ex instanceof NotFoundException) {
-            responseStatus = Response.Status.NOT_FOUND;
-            encryptionKeyResponseObject.setMessage("Information not found");
-        }
+        Response.Status responseStatus;
+        ResponseObject responseObject = new ResponseObject();
 
         // Handle according to the exception type
-        else if(ex instanceof SecomValidationException
+        if(ex instanceof SecomNotAuthorisedException) {
+            responseStatus = Response.Status.UNAUTHORIZED;
+            responseObject.setMessage("Not authorized to requested information");
+        } else if(ex instanceof SecomValidationException
                 || ex.getCause() instanceof SecomValidationException
                 || ex instanceof ValidationException
                 || ex instanceof JsonMappingException
-                || ex instanceof SecomSignatureVerificationException
-        ) {
+                || ex instanceof NotFoundException
+                || ex instanceof SecomSignatureVerificationException) {
             responseStatus = Response.Status.BAD_REQUEST;
-            encryptionKeyResponseObject.setMessage("Bad Request");
+            responseObject.setMessage("Bad Request");
+        } else if(ex instanceof SecomNotFoundException) {
+            responseStatus = Response.Status.NOT_FOUND;
+            responseObject.setMessage("Information not found");
         } else {
             responseStatus = GenericSecomInterface.handleCommonExceptionResponseCode(ex);
-            encryptionKeyResponseObject.setMessage(responseStatus.getReasonPhrase());
+            responseObject.setMessage(responseStatus.getReasonPhrase());
         }
 
         // And send the error response back
         return Response.status(responseStatus)
-                .entity(encryptionKeyResponseObject)
+                .entity(responseObject)
                 .build();
     }
 }
