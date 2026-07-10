@@ -179,6 +179,15 @@ public class SecomClient {
     }
 
     /**
+     * Return the WebClient to provide access for extended calls.
+     *
+     * @return the SECOM WebClient.
+     */
+    public WebClient getSecomClient() {
+        return this.secomClient;
+    }
+
+    /**
      * Sets certificate provider.
      *
      * @param certificateProvider the certificate provider

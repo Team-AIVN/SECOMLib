@@ -119,6 +119,14 @@ public class SecomWriterInterceptor implements WriterInterceptor {
                     .encodeData();
         }
         /*
+         * Only use this interceptor for envelope signature bearer objects such as:
+         *  1. RetrieveResults
+         *  2. PublicKeyResponseObject
+         */
+        else if (entity instanceof EnvelopeSignatureBearer envelopeSignatureBearer) {
+            envelopeSignatureBearer.signEnvelope(this.certificateProvider, this.signatureProvider);
+        }
+        /*
          * For plain binary data, we can also try to encrypt and compress if
          * possible. This can be used in the following cases:
          *  1. GetByLink

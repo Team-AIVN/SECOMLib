@@ -17,6 +17,7 @@ package org.grad.secomv2.core.models;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.grad.secomv2.core.base.EnvelopeSignatureBearer;
 
 import javax.validation.constraints.NotNull;
 
@@ -25,7 +26,7 @@ import javax.validation.constraints.NotNull;
  *
  * @author Lawrence Hughes (email: Lawrence.Hughes@gla-rad.org)
  */
-public class PublicKeyResponseObject  {
+public class PublicKeyResponseObject  implements EnvelopeSignatureBearer {
 
     // Class variables
     @NotNull
@@ -39,6 +40,7 @@ public class PublicKeyResponseObject  {
      *
      * @return the envelope
      */
+    @Override
     public EnvelopePublicKeyResponseObject getEnvelope() {
         return envelope;
     }
@@ -57,6 +59,7 @@ public class PublicKeyResponseObject  {
      *
      * @return the envelope signature
      */
+    @Override
     public String getEnvelopeSignature() {
         return envelopeSignature;
     }
@@ -66,6 +69,7 @@ public class PublicKeyResponseObject  {
      *
      * @param envelopeSignature the envelope signature
      */
+    @Override
     public void setEnvelopeSignature(String envelopeSignature) {
         this.envelopeSignature = envelopeSignature;
     }

@@ -95,6 +95,9 @@ public class SecomWriterInterceptor implements ResponseBodyAdvice<Object> {
         if (DigitalSignatureCollectionBearer.class.isAssignableFrom(rawType) || byte[].class.isAssignableFrom(rawType)) {
             return true;
         }
+        if (EnvelopeSignatureBearer.class.isAssignableFrom(rawType)) {
+            return true;
+        }
         if (ResponseEntity.class.isAssignableFrom(rawType)) {
             Type genericType = returnType.getGenericParameterType();
             if (genericType instanceof ParameterizedType pt) {
@@ -141,12 +144,24 @@ public class SecomWriterInterceptor implements ResponseBodyAdvice<Object> {
             return null;
         }
 
+        /*
+         * Only use this interceptor for data signature bearer objects such as:
+         *  1. GetResponseObject
+         */
         if (body instanceof DigitalSignatureCollectionBearer digitalSignatureCollectionBearer) {
             digitalSignatureCollectionBearer.prepareMetadata(this.signatureProvider)
                     .signData(this.certificateProvider, this.signatureProvider)
                     .encryptData(this.encryptionProvider)
                     .compressData(this.compressionProvider)
                     .encodeData();
+        }
+        /*
+         * Only use this interceptor for envelope signature bearer objects such as:
+         *  1. RetrieveResults
+         *  2. PublicKeyResponseObject
+         */
+        else if (body instanceof EnvelopeSignatureBearer envelopeSignatureBearer) {
+            envelopeSignatureBearer.signEnvelope(this.certificateProvider, this.signatureProvider);
         }
         /*
          * For plain binary data, we can also try to encrypt and compress if
