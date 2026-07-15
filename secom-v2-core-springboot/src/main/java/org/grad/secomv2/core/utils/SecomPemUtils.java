@@ -16,6 +16,11 @@
 
 package org.grad.secomv2.core.utils;
 
+import org.grad.secomv2.core.models.AbstractEnvelope;
+
+import javax.naming.InvalidNameException;
+import javax.naming.ldap.LdapName;
+import javax.naming.ldap.Rdn;
 import java.io.ByteArrayInputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -29,10 +34,7 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -361,6 +363,47 @@ public class SecomPemUtils {
                 .limit(byteBuffer.capacity())
                 .map(b -> String.format("%02x", b))
                 .collect(Collectors.joining());
+    }
+
+    /**
+     * Returns the MRN included in the first certificate from a list. This can
+     * be used to retrieve the SECOM request sender MRN, from the certificates
+     * included in a SECOM envelope
+     *
+     * @param envelope      The envelope to extract the MRN from
+     * @return the MRN of the SECOM request sender
+     */
+    public static String getMrnFromEnvelope(AbstractEnvelope envelope) {
+        //Extract first cert
+        final String cert = Optional.ofNullable(envelope)
+                .map(AbstractEnvelope::getEnvelopeSignatureCertificate)
+                .stream()
+                .flatMap(Arrays::stream)
+                .findFirst()
+                .orElse(null);
+
+        // If we have a certificate PEM
+        if(Objects.nonNull(cert)) {
+            try {
+                // Try to parse and read the certificate information
+                final X509Certificate parsedCert = SecomPemUtils.getCertFromPem(cert);
+                final String principalName =  parsedCert.getSubjectX500Principal().getName();
+                final LdapName ldapDN = new LdapName(principalName);
+                // Finally try to get the certificate UID attribute -  that's the MRN
+                for (Rdn rdn : ldapDN.getRdns()) {
+                    if (rdn.getType().equalsIgnoreCase("UID")) {
+                        return rdn.getValue().toString();
+                    }
+                }
+            }
+            // For any issues just return null
+            catch (CertificateException | InvalidNameException ex) {
+                return null;
+            }
+        }
+
+        // Otherwise return an empty MRN
+        return null;
     }
 
 }

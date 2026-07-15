@@ -16,8 +16,11 @@
 
 package org.grad.secomv2.core.utils;
 
+import org.grad.secomv2.core.base.SecomConstants;
+import org.grad.secomv2.core.models.EnvelopeSearchResultObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -35,6 +38,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doReturn;
 
 class SecomPemUtilsTest {
 
@@ -205,11 +209,28 @@ class SecomPemUtilsTest {
     @Test
     void testGetCertThumbprint() throws CertificateEncodingException, NoSuchAlgorithmException {
         // Get the thumbprint
-        final String thumbprint = SecomPemUtils.getCertThumbprint(this.resourceCert, "SHA-1");
+        final String thumbprint = SecomPemUtils.getCertThumbprint(this.resourceCert, SecomConstants.CERTIFICATE_THUMBPRINT_HASH);
 
         // Assert it's correct
         assertNotNull(thumbprint);
-        assertEquals("4328a4dc335c1ce73d8d8cdce4ed5afa8c1caa53", thumbprint);
+        assertEquals("1aa37977c8e1bf8885869cac82a66c0537069aff5e8a7db4ff01980f81a0f553", thumbprint);
+    }
+
+    /**
+     * Test that we can correctly retrieve the MRN from an envelope
+     */
+    @Test
+    void testGetMrnFromEnvelope() {
+        // Mock the envelope to be used and add the certificate
+        EnvelopeSearchResultObject envelope = Mockito.mock(EnvelopeSearchResultObject.class);
+        doReturn(new String[]{this.resourceMinifiedCert, "anotherCertificate", "andYetAnother"}).when(envelope).getEnvelopeSignatureCertificate();
+
+        // Perform the MRN retieval
+        String mrn = SecomPemUtils.getMrnFromEnvelope(envelope);
+
+        // Assert it's correct
+        assertNotNull(mrn);
+        assertEquals("urn:mrn:mcp:user:example:nikos", mrn);
     }
 
 }
