@@ -22,6 +22,7 @@ import org.grad.secomv2.core.base.CsvStringGenerator;
 import org.grad.secomv2.core.models.enums.SECOM_DataProductType;
 
 import jakarta.validation.constraints.Pattern;
+import org.grad.secomv2.core.models.enums.SECOM_ServiceType;
 import org.grad.secomv2.core.models.enums.ServiceInstanceStatusEnum;
 
 import java.net.URI;
@@ -50,7 +51,7 @@ public class SearchParameters implements CsvStringGenerator {
     private String mmsi;
     @Pattern(regexp = "^\\d{7}(?:\\d{2})?$")
     private String imo;
-    private String serviceType;
+    private SECOM_ServiceType serviceType;
     @Schema(description = "The search area as UNLOCODE", type = "string", example = "GBHRW")
     @Pattern(regexp = "^[a-zA-Z]{2}[a-zA-Z2-9]{3}")
     private String unlocode;
@@ -259,7 +260,7 @@ public class SearchParameters implements CsvStringGenerator {
      *
      * @return the service type
      */
-    public String getServiceType() {
+    public SECOM_ServiceType getServiceType() {
         return serviceType;
     }
 
@@ -268,7 +269,7 @@ public class SearchParameters implements CsvStringGenerator {
      *
      * @param serviceType the service type
      */
-    public void setServiceType(String serviceType) {
+    public void setServiceType(SECOM_ServiceType serviceType) {
         this.serviceType = serviceType;
     }
 
@@ -325,7 +326,7 @@ public class SearchParameters implements CsvStringGenerator {
                 (instanceId == null || instanceId.isBlank()) &&
                 (mmsi == null || mmsi.isBlank()) &&
                 (imo == null || imo.isBlank()) &&
-                (serviceType == null || serviceType.isBlank()) &&
+                serviceType == null &&
                 (unlocode == null || unlocode.isBlank()) &&
                 endpointUri == null);
     }

@@ -16,6 +16,7 @@
 
 package org.grad.secomv2.core.models;
 
+import org.grad.secomv2.core.models.enums.SECOM_ServiceType;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
 import org.grad.secomv2.core.models.enums.SECOM_DataProductType;
@@ -60,7 +61,7 @@ class EnvelopeSearchFilterObjectTest {
         this.searchParameters.setInstanceId("instanceId");
         this.searchParameters.setMmsi("mmsi");
         this.searchParameters.setImo("imo");
-        this.searchParameters.setServiceType("serviceType");
+        this.searchParameters.setServiceType(SECOM_ServiceType.MS2);
         this.searchParameters.setUnlocode("unlocode");
         this.searchParameters.setEndpointUri(new URI("http://localhost"));
 
@@ -133,7 +134,7 @@ class EnvelopeSearchFilterObjectTest {
         assertEquals(this.obj.getQuery().getInstanceId(), csv[8]);
         assertEquals(this.obj.getQuery().getMmsi(), csv[9]);
         assertEquals(this.obj.getQuery().getImo(), csv[10]);
-        assertEquals(this.obj.getQuery().getServiceType(), csv[11]);
+        assertEquals(this.obj.getQuery().getServiceType().toString(), csv[11]);
         assertEquals(this.obj.getQuery().getUnlocode(), csv[12]);
         assertEquals(this.obj.getQuery().getEndpointUri().toString(), csv[13]);
         assertEquals(this.obj.getGeometry(), csv[14]);
@@ -141,7 +142,6 @@ class EnvelopeSearchFilterObjectTest {
         assertEquals(Arrays.toString(this.obj.getEnvelopeSignatureCertificate()), csv[16]);
         assertEquals(this.obj.getEnvelopeRootCertificateThumbprint(), csv[17]);
         assertEquals(this.obj.getEnvelopeSignatureTime().getEpochSecond(), Long.parseLong(csv[18]));
-
     }
 
     /**

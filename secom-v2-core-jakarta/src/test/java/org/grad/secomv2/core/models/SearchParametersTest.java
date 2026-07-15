@@ -20,6 +20,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.grad.secomv2.core.models.enums.SECOM_DataProductType;
+import org.grad.secomv2.core.models.enums.SECOM_ServiceType;
 import org.grad.secomv2.core.models.enums.ServiceInstanceStatusEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,7 +59,7 @@ class SearchParametersTest {
         this.obj.setInstanceId("instanceId");
         this.obj.setMmsi("mmsi");
         this.obj.setImo("imo");
-        this.obj.setServiceType("serviceType");
+        this.obj.setServiceType(SECOM_ServiceType.MS2);
         this.obj.setUnlocode("unlocode");
         this.obj.setEndpointUri(new URI("http://localhost"));
     }

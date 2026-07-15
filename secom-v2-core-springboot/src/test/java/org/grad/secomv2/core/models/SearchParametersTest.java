@@ -16,6 +16,7 @@
 
 package org.grad.secomv2.core.models;
 
+import org.grad.secomv2.core.models.enums.SECOM_ServiceType;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
 import org.grad.secomv2.core.models.enums.SECOM_DataProductType;
@@ -56,7 +57,7 @@ class SearchParametersTest {
         this.obj.setInstanceId("instanceId");
         this.obj.setMmsi("mmsi");
         this.obj.setImo("imo");
-        this.obj.setServiceType("serviceType");
+        this.obj.setServiceType(SECOM_ServiceType.MS2);
         this.obj.setUnlocode("unlocode");
         this.obj.setEndpointUri(new URI("http://localhost"));
     }

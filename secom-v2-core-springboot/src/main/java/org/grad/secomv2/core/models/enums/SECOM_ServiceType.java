@@ -16,6 +16,9 @@
 
 package org.grad.secomv2.core.models.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -25,23 +28,23 @@ import java.util.Objects;
  * @author Nikolaos Vastardis (email: Nikolaos.Vastardis@gla-rad.org)
  */
 public enum SECOM_ServiceType implements SECOM_Enum {
-    VTS_INFORMATION_SERVICE("MS 1 - VTS Information service (INS)"),
-    VTS_NAVIGATIONAL_ASSISTANCE_SERVICE("MS 2 - VTS Navigational assistance service (NAS)"),
-    TRAFFIC_ORGANIZATION_SERVICE("MS 3 - Traffic organization service (TOS)"),
-    PORT_SUPPORT_SERVICE("MS 4 - Port support service (PSS)"),
-    MARITIME_SAFETY_INFORMATION_SERVICE("MS 5 - Maritime safety information (MSI) service"),
-    PILOTAGE_SERVICE("MS 6 - Pilotage service"),
-    TUG_SERVICE("MS 7 - Tug service"),
-    VESSEL_SHORE_REPORTING("MS 8 - Vessel shore reporting"),
-    TELEMEDICAL_ASSISTANCE_SERVICE("MS 9 - Telemedical assistance service (TMAS)"),
-    MARITIME_ASSISTANCE_SERVICE("MS 10 - Maritime assistance service (MAS)"),
-    NAUTICAL_CHART_SERVICE("MS 11 - Nautical chart service"),
-    NAUTICAL_PUBLICATIONS_SERVICE("MS 12 - Nautical publications service"),
-    ICE_NAVIGATION_SERVICE("MS 13 - Ice navigation service"),
-    METEOROLOGICAL_INFORMATION_SERVICE("MS 14 - Meteorological information service"),
-    REAL_TIME_HYDROGRAPHIC_AND_ENVIRONMENTAL_INFORMATION_SERVICES("MS 15 - Real-time hydrographic and environmental information services"),
-    SEARCH_AND_RESCUE_SERVICE("MS 16 - Search and rescue (SAR) service"),
-    OTHER_SERVICE("Other Service");
+    MS1("MS 1 - VTS Service"),
+    MS2("MS 2 - Aids to Navigation Service (AtoN)"),
+    MS3("MS 3 - Reserved"),
+    MS4("MS 4 - Port Support Service (PSS)"),
+    MS5("MS 5 - Maritime Safety Information (MSI) Service"),
+    MS6("MS 6 - Pilotage service"),
+    MS7("MS 7 - Tug service"),
+    MS8("MS 8 - Vessel shore reporting"),
+    MS9("MS 9 - Telemedical assistance service (TMAS)"),
+    MS10("MS 10 - Maritime assistance service (MAS)"),
+    MS11("MS 11 - Nautical chart service"),
+    MS12("MS 12 - Nautical publications service"),
+    MS13("MS 13 - Ice navigation service"),
+    MS14("MS 14 - Meteorological information service"),
+    MS15("MS 15 - Real-time hydrographic and environmental information services"),
+    MS16("MS 16 - Search and rescue (SAR) service"),
+    OTHER("Any other maritime service");
 
     // Enum Variables
     private final String description;
@@ -56,23 +59,25 @@ public enum SECOM_ServiceType implements SECOM_Enum {
     }
 
     /**
-     * Gets description.
-     *
+     * Gets value.
+     value
      * @return the description
      */
-    public String getDescription() {
+    @JsonValue
+    public String getValue() {
         return description;
     }
 
     /**
-     * Find the enum entry that corresponds to the provided description.
+     * Find the enum entry that corresponds to the provided value.
      *
-     * @param description the enum description
+     * @param value the enum value
      * @return The respective enum entry
      */
-    public static SECOM_ServiceType fromDescription(String description) {
+    @JsonCreator
+    public static SECOM_ServiceType fromValue(String value) {
         return Arrays.stream(SECOM_ServiceType.values())
-                .filter(t -> Objects.equals(t.getDescription(), description))
+                .filter(t -> Objects.equals(t.getValue(), value))
                 .findFirst()
                 .orElse(null);
     }
