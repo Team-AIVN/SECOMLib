@@ -17,7 +17,7 @@
 package org.grad.secomv2.core.utils;
 
 import org.grad.secomv2.core.base.SecomConstants;
-import org.grad.secomv2.core.models.EnvelopeSearchResultObject;
+import org.grad.secomv2.core.models.AbstractEnvelope;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -222,7 +222,7 @@ class SecomPemUtilsTest {
     @Test
     void testGetMrnFromEnvelope() {
         // Mock the envelope to be used and add the certificate
-        EnvelopeSearchResultObject envelope = Mockito.mock(EnvelopeSearchResultObject.class);
+        AbstractEnvelope envelope = Mockito.mock(AbstractEnvelope.class);
         doReturn(new String[]{this.resourceMinifiedCert, "anotherCertificate", "andYetAnother"}).when(envelope).getEnvelopeSignatureCertificate();
 
         // Perform the MRN retieval
@@ -231,6 +231,23 @@ class SecomPemUtilsTest {
         // Assert it's correct
         assertNotNull(mrn);
         assertEquals("urn:mrn:mcp:user:example:nikos", mrn);
+    }
+
+    /**
+     * Test that the function will return null if an invalid cartificate is
+     * provided to the MRN retrieval function.
+     */
+    @Test
+    void testGetMrnFromEnvelopeWhenInvalid() {
+        // Mock the envelope to be used and add the certificate
+        AbstractEnvelope envelope = Mockito.mock(AbstractEnvelope.class);
+        doReturn(new String[]{"aWrongCertificate", "anotherCertificate", "andYetAnother"}).when(envelope).getEnvelopeSignatureCertificate();
+
+        // Perform the MRN retieval
+        String mrn = SecomPemUtils.getMrnFromEnvelope(envelope);
+
+        // Assert it's correct
+        assertNull(mrn);
     }
 
 }
