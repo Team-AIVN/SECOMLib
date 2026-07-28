@@ -42,7 +42,7 @@ public interface RetrieveResultServiceInterface extends GenericSecomInterface {
     /**
      * The Interface Endpoint Path Base, i.e. without the transactionId path variable.
      */
-    String RETRIEVE_RESULT_INTERFACE_PATH_BASE = "/" + SecomConstants.SECOM_VERSION + "/retrieveResults";
+    String RETRIEVE_RESULT_INTERFACE_PATH_BASE = "/" + SecomConstants.SECOM_VERSION + "/retrieveResult";
 
     /**
      * The Interface Endpoint Path.
