@@ -379,7 +379,10 @@ public class SecomClient {
 
         return this.secomClient
                 .post()
-                .uri(RETRIEVE_RESULT_INTERFACE_PATH)
+                .uri(uriBuilder -> uriBuilder
+                        .path(RETRIEVE_RESULT_INTERFACE_PATH)
+                        .queryParam("transactionId", retrieveResultObject.getEnvelope().getTransactionId())
+                        .build())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(retrieveResultObject))

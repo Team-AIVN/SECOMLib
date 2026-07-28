@@ -50,6 +50,7 @@ public interface RetrieveResultServiceInterface extends GenericSecomInterface {
      * transaction is identified by the transactionId field in the response to the iniitial
      * searchService request.
      *
+     * @param transactionId    The transaction ID of the search
      * @param retrieveResultObject    The search filter object
      * @return the result object
      */
@@ -57,7 +58,7 @@ public interface RetrieveResultServiceInterface extends GenericSecomInterface {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    SearchResult retrieveResult(@Valid RetrieveResultObject retrieveResultObject);
+    SearchResult retrieveResult(@QueryParam("transactionId") String transactionId, @Valid RetrieveResultObject retrieveResultObject);
 
     /**
      * The exception handler implementation for the interface.
