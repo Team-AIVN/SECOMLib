@@ -118,25 +118,6 @@ public class SecomReaderInterceptor implements RequestBodyAdvice {
             return body;
         }
 
-        Object obj = null;
-
-        // For the Get Response Messages
-        if (body instanceof GetResponseObject getResponseObject){
-            obj = getResponseObject;
-        }
-        // For the Upload Object Messages
-        else if (body instanceof UploadObject uploadObject) {
-            obj = uploadObject;
-        }
-        // For the Search Filter Object
-        else if (body instanceof SearchFilterObject searchFilterObject) {
-            obj = searchFilterObject;
-        }
-        // For Get By Link Byte Array Messages
-        else if(body instanceof byte[] data) {
-            obj = data;
-        }
-
         if (body instanceof DigitalSignatureCollectionBearer digitalSignatureCollectionBearer) {
             digitalSignatureCollectionBearer
                     .decodeData()
