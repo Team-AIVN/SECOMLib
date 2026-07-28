@@ -34,7 +34,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.HttpClientErrorException;
 
 /**
@@ -46,12 +46,17 @@ import org.springframework.web.client.HttpClientErrorException;
 public interface RetrieveResultServiceInterface extends GenericSecomInterface {
 
     /**
-     * The Interface Endpoint Path.
+     * The Interface Endpoint Path Base, i.e. without the transactionId path variable.
      */
-    String RETRIEVE_RESULT_INTERFACE_PATH = "/" + SecomConstants.SECOM_VERSION + "/retrieveResult";
+    String RETRIEVE_RESULT_INTERFACE_PATH_BASE = "/" + SecomConstants.SECOM_VERSION + "/retrieveResults";
 
     /**
-     * POST /v2/retrieveResult : The purpose of this interface is pull results of a
+     * The Interface Endpoint Path.
+     */
+    String RETRIEVE_RESULT_INTERFACE_PATH = RETRIEVE_RESULT_INTERFACE_PATH_BASE + "/{transactionId}";
+
+    /**
+     * POST /v2/retrieveResults/{transactionId} : The purpose of this interface is pull results of a
      * search transaction for which more results may arrive asynchronously. The search
      * transaction is identified by the transactionId field in the response to the initial
      * searchService request.
@@ -63,8 +68,7 @@ public interface RetrieveResultServiceInterface extends GenericSecomInterface {
     @PostMapping(path = RETRIEVE_RESULT_INTERFACE_PATH,
                 consumes = { MediaType.APPLICATION_JSON_VALUE },
                 produces = { MediaType.APPLICATION_JSON_VALUE })
-    ResponseEntity<SearchResult> retrieveResult(@RequestParam(name = "transactionId", required =
-                                                        true) String transactionId,
+    ResponseEntity<SearchResult> retrieveResult(@PathVariable(name = "transactionId") String transactionId,
                                                  @Valid @RequestBody RetrieveResultObject retrieveResultObject);
 
     /**
