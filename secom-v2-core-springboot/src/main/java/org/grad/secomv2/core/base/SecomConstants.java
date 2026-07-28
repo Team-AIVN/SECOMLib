@@ -47,7 +47,7 @@ public class SecomConstants {
     /**
      * The Algorithm to be used for generating signatures.
      */
-    public static final String CERTIFICATE_THUMBPRINT_HASH = "SHA-256";
+    public static final String CERTIFICATE_THUMBPRINT_HASH = "SHA-384";
 
     /**
      * The SECOM Maximum Payload Size in KiloBytes.

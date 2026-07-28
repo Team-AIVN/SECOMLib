@@ -214,7 +214,7 @@ class SecomPemUtilsTest {
 
         // Assert it's correct
         assertNotNull(thumbprint);
-        assertEquals("1aa37977c8e1bf8885869cac82a66c0537069aff5e8a7db4ff01980f81a0f553", thumbprint);
+        assertEquals("26845e27a7e36b31fd38a6cbc931f7768b3f26eb6a736e54d58d339b7d9984aa8430b13bd0ab72fb1e12b1477e623951", thumbprint);
     }
 
     /**
