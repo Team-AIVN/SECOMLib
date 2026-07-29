@@ -55,7 +55,10 @@ public class PkiUtils {
         // Create validator and revocation checker
         final CertPathValidator validator = CertPathValidator.getInstance("PKIX");
         final PKIXRevocationChecker rc = (PKIXRevocationChecker)validator.getRevocationChecker();
-        rc.setOptions(EnumSet.of(PKIXRevocationChecker.Option.SOFT_FAIL));
+        rc.setOptions(EnumSet.of(
+                PKIXRevocationChecker.Option.SOFT_FAIL,
+                PKIXRevocationChecker.Option.ONLY_END_ENTITY,
+                PKIXRevocationChecker.Option.NO_FALLBACK));
 
         // Configure the PKIX certificate path validator algorithm parameters
         final PKIXParameters pkixParams = new PKIXParameters(ks);
@@ -110,7 +113,10 @@ public class PkiUtils {
         // Build and verify the certification chain
         final CertPathBuilder builder = CertPathBuilder.getInstance("PKIX");
         PKIXRevocationChecker rc = (PKIXRevocationChecker)builder.getRevocationChecker();
-        rc.setOptions(EnumSet.of(PKIXRevocationChecker.Option.SOFT_FAIL));
+        rc.setOptions(EnumSet.of(
+                PKIXRevocationChecker.Option.SOFT_FAIL,
+                PKIXRevocationChecker.Option.ONLY_END_ENTITY,
+                PKIXRevocationChecker.Option.NO_FALLBACK));
 
         // Configure the PKIX certificate builder algorithm parameters
         final PKIXBuilderParameters pkixParams = new PKIXBuilderParameters(trustAnchors, selector);
