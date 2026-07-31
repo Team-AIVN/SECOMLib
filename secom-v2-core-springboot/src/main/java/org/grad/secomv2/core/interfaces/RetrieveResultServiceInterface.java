@@ -16,6 +16,7 @@
 
 package org.grad.secomv2.core.interfaces;
 
+import jakarta.websocket.server.PathParam;
 import org.grad.secomv2.core.exceptions.SecomNotAuthorisedException;
 import org.springframework.boot.json.JsonParseException;
 import tools.jackson.core.JacksonException;
@@ -68,8 +69,9 @@ public interface RetrieveResultServiceInterface extends GenericSecomInterface {
     @PostMapping(path = RETRIEVE_RESULT_INTERFACE_PATH,
                 consumes = { MediaType.APPLICATION_JSON_VALUE },
                 produces = { MediaType.APPLICATION_JSON_VALUE })
-    ResponseEntity<SearchResult> retrieveResult(@PathVariable(name = "transactionId") String transactionId,
-                                                 @Valid @RequestBody RetrieveResultObject retrieveResultObject);
+    SearchResult retrieveResult(
+            @PathVariable String transactionId,
+            @Valid @RequestBody RetrieveResultObject retrieveResultObject);
 
     /**
      * The exception handler implementation for the interface.
