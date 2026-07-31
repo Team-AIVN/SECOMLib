@@ -69,7 +69,7 @@ public interface RetrieveResultServiceInterface extends GenericSecomInterface {
     @PostMapping(path = RETRIEVE_RESULT_INTERFACE_PATH,
                 consumes = { MediaType.APPLICATION_JSON_VALUE },
                 produces = { MediaType.APPLICATION_JSON_VALUE })
-    SearchResult retrieveResult(
+    ResponseEntity<SearchResult> retrieveResult(
             @PathVariable String transactionId,
             @Valid @RequestBody RetrieveResultObject retrieveResultObject);
 
