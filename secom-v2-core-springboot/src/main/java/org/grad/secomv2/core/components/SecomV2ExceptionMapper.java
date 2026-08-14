@@ -99,11 +99,6 @@ public class SecomV2ExceptionMapper {
             return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
         }
 
-        // The Retrieve Result interface path contains a transactionId path variable,
-        // so it cannot be matched with an exact switch/case label
-        if(path.contains(RETRIEVE_RESULT_INTERFACE_PATH_BASE)) {
-            return RetrieveResultServiceInterface.handleRetrieveResultInterfaceExceptions(ex, request);
-        }
 
         // Then handle
         switch(path) {

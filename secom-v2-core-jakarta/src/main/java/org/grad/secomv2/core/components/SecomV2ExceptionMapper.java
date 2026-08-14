@@ -125,13 +125,6 @@ public class SecomV2ExceptionMapper implements ExceptionMapper<Exception>, Conte
         secomLogger.warning("API method was: " + this.request.getMethod());
         secomLogger.warning("Exception was: " + ex.getClass().getSimpleName());
 
-        // The Retrieve Result interface path contains a transactionId path variable,
-        // so it cannot be matched with an exact switch/case label
-        if(Optional.ofNullable(this.request).map(HttpServletRequest::getPathInfo)
-                .filter(path -> path.contains(RetrieveResultServiceInterface.RETRIEVE_RESULT_INTERFACE_PATH_BASE))
-                .isPresent()) {
-            return RetrieveResultServiceInterface.handleRetrieveResultInterfaceExceptions(ex, this.request, null);
-        }
 
         // Then handle
         if(Optional.ofNullable(this.request).map(HttpServletRequest::getPathInfo).isPresent()) {
