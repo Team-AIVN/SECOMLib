@@ -32,6 +32,9 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdvice;
 import java.io.IOException;
 import java.lang.reflect.Type;
 
+import static org.grad.secomv2.core.base.SecomConstants.API_PATH;
+import static org.grad.secomv2.core.base.SecomConstants.SECOM_VERSION;
+
 /**
  * The SECOM Reader Interceptor
  * <p>
@@ -111,10 +114,11 @@ public class SecomReaderInterceptor implements RequestBodyAdvice {
     @Override
     public Object afterBodyRead(Object body, HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
 
-        String path = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
-                .getRequest().getServletPath();
+        ServletRequestAttributes attrs =
+                (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        String path = attrs.getRequest().getServletPath();
 
-        if (!path.startsWith("/" + SecomConstants.SECOM_VERSION)) {
+        if (!path.startsWith(API_PATH + "/" + SECOM_VERSION + "/")) {
             return body;
         }
 
