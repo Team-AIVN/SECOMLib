@@ -81,7 +81,6 @@ public interface SearchServiceServiceInterface extends GenericSecomInterface {
         // Handle according to the exception type
         if(ex instanceof SecomSignatureVerificationException) {
             httpStatus = HttpStatus.UNAUTHORIZED;
-            searchResult.setMessage("Unauthorized");
         } else if(ex instanceof SecomValidationException
                 || ex.getCause() instanceof SecomValidationException
                 || ex instanceof ValidationException
@@ -89,13 +88,10 @@ public interface SearchServiceServiceInterface extends GenericSecomInterface {
                 || ex instanceof HttpClientErrorException.NotFound
                 || ex instanceof JsonParseException) {
             httpStatus = HttpStatus.BAD_REQUEST;
-            searchResult.setMessage("Bad Request");
         } else if(ex instanceof SecomNotFoundException) {
             httpStatus = HttpStatus.NOT_FOUND;
-            searchResult.setMessage("Information not found");
         } else {
             httpStatus = GenericSecomInterface.handleCommonExceptionResponseCode(ex);
-            searchResult.setMessage(httpStatus.getReasonPhrase());
         }
 
         return ResponseEntity
