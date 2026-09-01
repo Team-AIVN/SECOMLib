@@ -86,7 +86,7 @@ public interface SearchServiceServiceInterface extends GenericSecomInterface {
                 || ex instanceof ValidationException
                 || ex instanceof JacksonException
                 || ex instanceof HttpClientErrorException.NotFound
-                || ex instanceof JsonParseException) {
+                || ex instanceof IllegalArgumentException) {
             httpStatus = HttpStatus.BAD_REQUEST;
         } else if(ex instanceof SecomNotFoundException) {
             httpStatus = HttpStatus.NOT_FOUND;
